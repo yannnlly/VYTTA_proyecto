@@ -1,9 +1,7 @@
 # Especificación de requisitos · VYTTA
 
-**Sistema:** VYTTA 
-
-
-**Autor:** Luz Yanelly Garduño Paniagua  
+**Sistema:** VYTTA- Sistema web de reservación y gestión de clases
+**Autor:** Luz Yanelly Garduño Paniagua
 
 
 ---
@@ -11,329 +9,505 @@
 ## 1. Propósito y alcance
 
 ### Propósito del documento
-El proposito de este documento es poder definir de una manera mas clara todas las especificaciones que debe de tener VYTTA y las funciones que debe de  realizar a los distintos tipos de usuarios dentro de VYTTA
 
-Para realizarlo se tomó en cuenta la Visión del producto que se hizo anteriormente y también la información que se obtuvo durante la entrevista. 
+El propósito de este documento es definir de manera clara los requisitos funcionales y no funcionales de VYTTA, tomando como base la Visión del producto y la información obtenida durante la entrevista.
+
+Este documento servirá como referencia para definir qué debe realizar el sistema, establecer criterios que permitan comprobar el cumplimiento de cada requisito y mantener la relación entre los requisitos, los casos de uso y los elementos del prototipo.
+
 ### Alcance del sistema
 
-VYTTA será una aplicación web que ayudará a llevar de una manera más organizada las reservaciones de las clases del estudio.
+VYTTA será una aplicación web enfocada en facilitar la **reservación y gestión de clases** dentro del estudio.
 
-Los clientes podrán crear una cuenta, iniciar sesión, consultar las clases disponibles, ver los horarios, maestras, precios y lugares disponibles. También podrán reservar una clase, realizar su pago, cancelar una reservación y consultar sus próximas clases y su historial de fidelidad dentro del estudio.
+Los clientes podrán registrarse, iniciar sesión, consultar clases y lugares disponibles, reservar clases, realizar pagos, cancelar reservaciones y consultar su historial de reservaciones.
 
-Las maestras podrán consultar las clases que tienen asignadas, ver qué personas están registradas, los lugares que cada persona va a ocupar, llevar el control de las asistencias, y verificar que los usuarios ya hayan pagado su clase antes de impartirla.
+Cada clase tendrá una **capacidad máxima de 8 alumnos**. VYTTA deberá mantener actualizada la cantidad de lugares disponibles e impedir nuevas reservaciones cuando una clase alcance los 8 alumnos registrados.
 
-Por otro lado, el administrador tendrá un control más completo del sistema y podrá administrar las clases, horarios, maestras, reservaciones, pagos, cancelaciones y asistencias; las asistencias no solo serán de la parte de los usuario sino también de  las maestras.
+También podrán consultar su **programa de fidelidad**, el cual funcionará mediante un conteo de estrellas relacionado con su constancia y fidelidad con el estudio. Las estrellas podrán aumentar o disminuir de acuerdo con las reglas establecidas por el estudio y podrán relacionarse con promociones o beneficios.
 
-VYTTA también tendrá un sistema de estrellas que servirá para reconocer a los clientes que son constantes y responsables con las reservaciones que realizan.
+Los clientes también podrán calificar las clases a las que hayan asistido, registrar testimonios sobre su experiencia y consultar testimonios registrados por otros clientes.
+
+Las maestras podrán consultar las clases que tienen asignadas, consultar las personas registradas y registrar la asistencia de los clientes.
+
+El administrador podrá registrar y modificar clases, registrar horarios, registrar maestras y consultar las reservaciones y pagos relacionados con las clases.
 
 ### Fuera del alcance
 
-Al momento de pagar un paquete o de ser usuarios VYTTA NO CONTARA con lo siguiente:
+Quedan fuera del alcance de VYTTA las siguientes funciones:
 
-- Una aplicación móvil para Android o iOS.
-- Rutinas de ejercicio personalizadas.
-- Seguimiento médico o nutricional.
-- Conexión con relojes inteligentes u otros dispositivos.
-- Clases virtuales por videollamada.
+- Desarrollar una aplicación móvil nativa para Android o iOS.
+- Generar rutinas de ejercicio personalizadas.
+- Realizar seguimiento médico o nutricional.
+- Conectar relojes inteligentes u otros dispositivos.
+- Impartir clases virtuales mediante videollamada.
 
-Estas funciones quedan fuera porque VYTTA está enfocado principalmente en mejorar la manera en la que se reservan y administran las clases dentro del estudio.
+Estas funciones quedan fuera del alcance porque VYTTA se enfocará en la reservación y gestión de clases dentro del estudio.
 
 ---
 
 ## 2. Usuarios y su contexto
 
-Después de realizar la entrevista se pudo entender mejor qué necesita cada tipo de usuario y qué problemas tienen actualmente al organizar las reservaciones.
+Después de realizar la entrevista se pudo entender mejor qué necesita cada tipo de usuario y cuáles son los principales problemas que se presentan actualmente durante la reservación y gestión de clases.
 
-| Usuario | Qué hace hoy sin el sistema | Qué espera del sistema |
-|---|---|---|
-| **Cliente** | Se comunica por WhatsApp o redes sociales para preguntar por horarios, precios y lugares disponibles. Después tiene que esperar a que el estudio le confirme su lugar. | Poder consultar las clases disponibles ne cualquier momento , reservar, pagar, cancelar y revisar sus reservaciones de una manera sencilla. También podrá consultar sus estrellas, y sus premios a ganar por mantener la fidelidad o por ser un usuario reciente. |
-| **Maestra** | Recibe por mensajes o visualiza las listas de información de las personas que asistirán a sus clases, pero esta información puede no estar actualizada. | Poder consultar sus clases, horarios y las personas que están registradas, además de llevar el control de asistencia y visualizar si los usuarios ya cuentan con la clase pagada o aun esta en adeudos . |
-| **Administrador** | Tiene que revisar mensajes, organizar las reservaciones, comprobar pagos y llevar el control de los lugares disponibles o lugares recientemente cancelados. | Poder tener en un mismo lugar el control de las clases, horarios, usuarios, reservaciones, pagos, cancelaciones y asistencias actualizadas en tiempo y hora. |
+| Usuario           | Qué hace hoy sin el sistema                                                                                                                               | Qué espera del sistema                                                                                                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Cliente**       | Se comunica por WhatsApp o redes sociales para preguntar por clases, horarios, precios y lugares disponibles. Después espera la confirmación del estudio. | Consultar clases y lugares disponibles. Reservar clases. Realizar pagos. Cancelar reservaciones. Consultar su historial. Consultar su programa de fidelidad. Calificar clases. Registrar testimonios. Consultar testimonios. |
+| **Maestra**       | Recibe mediante mensajes o listas la información de las personas que asistirán a sus clases, pero esta información puede no estar actualizada.            | Consultar las personas registradas en sus clases y registrar asistencias.                                                                                                                                                    |
+| **Administrador** | Revisa mensajes, organiza reservaciones, comprueba pagos y lleva el control de los lugares disponibles.                                                   | Registrar clases. Modificar clases. Registrar horarios. Registrar maestras. Consultar reservaciones. Consultar pagos y mantener el control de la capacidad máxima de 8 alumnos por clase.                                    |
 
 ### Conflictos identificados entre usuarios
 
-Uno de los conflictos que se pueden presentar es con las cancelaciones.
+Uno de los principales conflictos identificados durante la entrevista se relaciona con las cancelaciones.
 
-Por una parte, el cliente puede necesitar cancelar una clase, pero también es importante que el estudio tenga tiempo para liberar ese lugar y que otra persona pueda reservarlo.
+El cliente puede necesitar cancelar una reservación, pero el estudio necesita contar con suficiente tiempo para liberar el lugar y permitir que otra persona pueda reservarlo.
 
-Por esta razón, se decidió que los clientes podrán cancelar una reservación sin recibir una penalización siempre que lo hagan mínimo 3 horas antes de que comience la clase.
+Después de la entrevista se estableció que una reservación deberá cancelarse con un mínimo de **3 horas de anticipación** para evitar una penalización.
 
-Si cancelan cuando faltan menos de 3 horas, perderán una estrella y el crédito de esa clase se tomará como utilizado. Lo mismo sucederá si reservaron una clase y no se presentan.
+Cuando el cliente cancele con 3 horas o más de anticipación, el lugar se liberará sin aplicar una penalización.
 
-Otro de los conflictos que se presentan son la sobre venta de los cupos dentro del estudio.
+Cuando el cliente cancele con menos de 3 horas de anticipación, el lugar se liberará, pero se descontará una estrella de su programa de fidelidad y el crédito correspondiente a la clase se registrará como utilizado.
 
-Por una parte las maestras del administrados pueden perder comunicación con las clases que ya se encuentran vendidas y las restantes, puede causar confusión al momento de que esta se encuentre comenzando.
+Cuando un cliente tenga una reservación y no se presente a la clase, también se descontará una estrella de su programa de fidelidad.
 
-Si se encuentra actualizado en tiempo y forma como se administran las clases de cada horario esto puede agilizar y evitar que esto suceda.
+Otro conflicto identificado es el posible sobrecupo de las clases. Cada clase tendrá una **capacidad máxima de 8 alumnos**, por lo que VYTTA deberá mantener actualizada la cantidad de lugares disponibles.
 
----
+Cada reservación confirmada ocupará uno de los 8 lugares de la clase. Cuando se alcance la capacidad máxima, el sistema deberá mostrar 0 lugares disponibles e impedir que se registren nuevas reservaciones.
 
-## 3. Requisitos funcionales
-
-### 3.1 Resumen
-
-| ID | Nombre | Prioridad | Origen |
-|---|---|---|---|
-| RF-001 | Registro e inicio de sesión | Imprescindible | Visión del producto |
-| RF-002 | Consulta de clases | Imprescindible | Visión del producto + Entrevista |
-| RF-003 | Consulta de lugares disponibles | Imprescindible | Entrevista |
-| RF-004 | Reservación de clase | Imprescindible | Visión del producto + Entrevista |
-| RF-005 | Pago de reservación | Imprescindible | Visión del producto |
-| RF-006 | Cancelación de reservación | Imprescindible | Entrevista + regla definida |
-| RF-007 | Historial de reservaciones | Importante | Visión del producto |
-| RF-008 | Registro de asistencia | Imprescindible | Visión del producto + Entrevista |
-| RF-009 | Sistema de estrellas | Importante | Visión del producto + Entrevista |
-| RF-010 | Calificaciones y testimonios | Deseable | Visión del producto |
-| RF-011 | Administración de clases | Imprescindible | Visión del producto + Entrevista |
-| RF-012 | Paquetes y promociones | Importante | Entrevista |
-
-### 3.2 Fichas
-
-#### RF-001 · Registro e inicio de sesión
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El sistema permitirá que los usuarios puedan crear una cuenta e iniciar sesión para entrar a VYTTA. |
-| **Origen** | Visión del producto. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | Si el usuario llena correctamente todos los datos necesarios podrá crear su cuenta e iniciar sesión. Si falta algún dato o es incorrecto, el sistema deberá indicarlo y no permitirá continuar hasta corregirlo. |
-| **Relacionado con** | RNF-SEG-001 |
-
-#### RF-002 · Consulta de clases
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El cliente podrá consultar las clases disponibles y ver información como el tipo de clase, horario, maestra, duración, precio,  lugares disponibles y su testimonio de las alumnas que ya hayan tomado esa clase. |
-| **Origen** | Visión del producto y entrevista. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | Cuando el cliente seleccione una clase deberá poder ver toda su información antes de decidir si quiere reservarla o adquirirla. |
-| **Relacionado con** | RF-003, RF-004, RNF-USA-001 |
-
-#### RF-003 · Consulta de lugares disponibles
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El sistema mostrará cuántos lugares quedan disponibles en cada clase y en cuales les gustaría ocupar a cada usuario . |
-| **Origen** | Entrevista. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | Cada vez que una persona reserve o cancele, la cantidad de lugares disponibles deberá actualizarse. Si ya no existen lugares, se deberá mostrar que la clase está llena y no se podrán realizar más reservaciones. |
-| **Relacionado con** | RF-002, RF-004, RF-006, RNF-CON-001 |
-
-#### RF-004 · Reservación de clase
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El cliente podrá reservar un lugar en cualquiera de las clases que todavía tenga lugares disponibles. |
-| **Origen** | Visión del producto y entrevista. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | Cuando el cliente realice correctamente una reservación, el sistema deberá guardar su lugar y disminuirla cantidad de lugares disponibles. Si la clase está llena, no deberá permitir otra reservación. |
-| **Relacionado con** | RF-003, RF-005, RNF-CON-001 |
-
-#### RF-005 · Pago de reservación
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El cliente podrá realizar el pago de una clase o de alguno de los paquetes disponibles. |
-| **Origen** | Visión del producto. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | Cuando el pago se realice correctamente, deberá aparecer como confirmado. Si existe algún problema y el pago no se completa, no deberá aparecer como pagado. |
-| **Relacionado con** | RF-004, RF-012, RNF-SEG-001 |
-
-#### RF-006 · Cancelación de reservación
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El cliente podrá cancelar una reservación. Si cancela mínimo 4 horas antes de la clase no recibirá ninguna penalización. |
-| **Origen** | Entrevista y regla definida después de la entrevista. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | Si el cliente cancela con 4 horas o más de anticipación, su lugar se liberará sin perder una estrella. Si cancela cuando faltan menos de 4 horas, el lugar también se liberará, pero perderá una estrella y el crédito de la clase se tomará como utilizado. |
-| **Relacionado con** | RF-003, RF-009 |
-
-#### RF-007 · Historial de reservaciones
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El cliente podrá consultar las clases que tiene reservadas y también las clases en su historial. |
-| **Origen** | Visión del producto. |
-| **Prioridad** | Importante |
-| **Criterio de aceptación** | Al entrar a su historial, el cliente deberá poder ver sus reservaciones y conocer la fecha, la clase y el estado de cada una. |
-| **Relacionado con** | RF-004, RF-006 |
-
-#### RF-008 · Registro de asistencia
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | Las maestras podrán registrar la asistencia de las personas inscritas en sus clases. |
-| **Origen** | Visión del producto y entrevista. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | La maestra podrá entrar a una de sus clases, consultar la lista de personas registradas y marcar quién asistió y quién no asistió. |
-| **Relacionado con** | RF-009 |
-
-#### RF-009 · Sistema de estrellas
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | VYTTA tendrá un sistema de estrellas que servirá para reconocer a los clientes que son constantes y responsables con sus reservaciones. |
-| **Origen** | Visión del producto y entrevista. |
-| **Prioridad** | Importante |
-| **Criterio de aceptación** | Cada cliente nuevo comenzará con una estrella. Podrá aumentar sus estrellas por su constancia y participación. Si cancela faltando menos de 4 horas para la clase o no se presenta, perderá una estrella. Cada cinco estrellas acumuladas servirán para identificar un nivel de confiabilidad del cliente. |
-| **Relacionado con** | RF-006, RF-008, RF-010, RF-012 |
-
-#### RF-010 · Calificaciones y testimonios
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | Los clientes podrán calificar las clases a las que asistieron y también podrán dejar un testimonio. |
-| **Origen** | Visión del producto. |
-| **Prioridad** | Deseable |
-| **Criterio de aceptación** | Después de asistir a una clase, el cliente podrá calificarla y tendrá la opción de escribir un testimonio sobre su experiencia. |
-| **Relacionado con** | RF-008, RF-009 |
-
-#### RF-011 · Administración de clases
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | El administrador podrá llevar el control de las clases, horarios, maestras, capacidad y reservaciones. |
-| **Origen** | Visión del producto y entrevista. |
-| **Prioridad** | Imprescindible |
-| **Criterio de aceptación** | El administrador podrá consultar y modificar la información de las clases, además de revisar sus reservaciones, lugares disponibles, pagos y asistencias. |
-| **Relacionado con** | RF-002, RF-003, RF-004, RF-008 |
-
-#### RF-012 · Paquetes y promociones
-
-| Campo | Contenido |
-|---|---|
-| **Descripción** | Los clientes podrán consultar los diferentes paquetes, precios y promociones que tenga disponibles el estudio. |
-| **Origen** | Entrevista. |
-| **Prioridad** | Importante |
-| **Criterio de aceptación** | Al entrar a la sección correspondiente, el cliente deberá poder consultar los paquetes y promociones disponibles, además de conocer su precio y las condiciones para utilizarlos. |
-| **Relacionado con** | RF-005, RF-009 |
+Cuando una reservación sea cancelada, el sistema deberá liberar nuevamente el lugar para que pueda ser reservado por otro cliente.
 
 ---
 
-## 4. Requisitos no funcionales
+# 3. Requisitos funcionales
 
-### 4.1 Resumen
+## 3.1 Resumen
 
-| ID | Atributo | Nombre | Prioridad | Origen |
-|---|---|---|---|---|
-| RNF-SEG-001 | Seguridad | Control de acceso | Imprescindible | Tipo de sistema |
-| RNF-DIS-001 | Disponibilidad | Disponibilidad del sistema | Importante | Tipo de sistema |
-| RNF-USA-001 | Usabilidad | Facilidad de uso | Imprescindible | Entrevista |
-| RNF-CON-001 | Confiabilidad | Control correcto de lugares | Imprescindible | Entrevista |
-| RNF-COM-001 | Compatibilidad | Uso en diferentes dispositivos | Importante | Visión del producto |
+Los siguientes requisitos representan las funciones que realizará VYTTA. Cada requisito tiene un identificador único y expresa una sola función del sistema.
 
-### 4.2 Fichas
-
-#### RNF-SEG-001 · Control de acceso
-
-| Campo | Contenido |
-|---|---|
-| **Atributo de calidad** | Seguridad |
-| **Descripción** | Cada usuario solamente podrá entrar a las funciones que le corresponden dependiendo de si es cliente, maestra o administrador. |
-| **Métrica** | Durante las pruebas, ninguno de los tres tipos de usuario deberá poder entrar a funciones que pertenezcan únicamente a otro tipo de usuario. |
-| **Origen** | Tipo de sistema y Visión del producto. |
-| **Prioridad** | Imprescindible |
-| **Por qué importa** | No todos los usuarios deben tener acceso a la misma información ni realizar las mismas acciones dentro de VYTTA. |
-| **Afecta a** | RF-001, RF-011 |
-
-#### RNF-DIS-001 · Disponibilidad del sistema
-
-| Campo | Contenido |
-|---|---|
-| **Atributo de calidad** | Disponibilidad |
-| **Descripción** | VYTTA deberá estar disponible la mayor parte del tiempo para que los clientes puedan consultar y reservar clases cuando lo necesiten. |
-| **Métrica** | El sistema deberá tener por lo menos un 99 % de disponibilidad mensual, sin contar los mantenimientos programados. |
-| **Origen** | Tipo de sistema. |
-| **Prioridad** | Importante |
-| **Por qué importa** | Si la página no está disponible, los clientes no podrán consultar horarios ni realizar sus reservaciones. |
-| **Afecta a** | RF-002, RF-003, RF-004 |
-
-#### RNF-USA-001 · Facilidad de uso
-
-| Campo | Contenido |
-|---|---|
-| **Atributo de calidad** | Usabilidad |
-| **Descripción** | Consultar y reservar una clase deberá ser sencillo y fácil de entender para los clientes. |
-| **Métrica** | En una prueba con 10 personas, por lo menos 9 deberán poder buscar una clase y completar una reservación sin necesitar ayuda. |
-| **Origen** | Entrevista. |
-| **Prioridad** | Imprescindible |
-| **Por qué importa** | Si VYTTA es difícil de utilizar, los clientes podrían preferir seguir haciendo sus reservaciones por WhatsApp. |
-| **Afecta a** | RF-002, RF-004 |
-
-#### RNF-CON-001 · Control correcto de lugares
-
-| Campo | Contenido |
-|---|---|
-| **Atributo de calidad** | Confiabilidad |
-| **Descripción** | Los lugares disponibles que aparezcan en VYTTA deberán coincidir con las reservaciones realizadas. |
-| **Métrica** | Durante las pruebas se realizarán 20 reservaciones y cancelaciones. Después de cada operación, la cantidad de lugares mostrada deberá coincidir con la cantidad real de lugares disponibles y nunca superar la capacidad de la clase. |
-| **Origen** | Entrevista. |
-| **Prioridad** | Imprescindible |
-| **Por qué importa** | Uno de los problemas que se busca solucionar con VYTTA es evitar los sobrecupos y la confusión sobre cuántos lugares quedan disponibles. |
-| **Afecta a** | RF-003, RF-004, RF-006 |
-
-#### RNF-COM-001 · Uso en diferentes dispositivos
-
-| Campo | Contenido |
-|---|---|
-| **Atributo de calidad** | Compatibilidad |
-| **Descripción** | VYTTA deberá poder utilizarse desde una computadora, tableta o celular por medio de un navegador web. |
-| **Métrica** | Durante las pruebas, las funciones principales deberán poder utilizarse correctamente en pantallas de celular, tableta y computadora sin que la información importante quede fuera de la pantalla. |
-| **Origen** | Visión del producto. |
-| **Prioridad** | Importante |
-| **Por qué importa** | No todos los clientes van a entrar a VYTTA desde el mismo tipo de dispositivo. |
-| **Afecta a** | RF-001, RF-002, RF-004, RF-007 |
+| ID     | Nombre                               | Prioridad      | Origen                                  |
+| ------ | ------------------------------------ | -------------- | --------------------------------------- |
+| RF-001 | Registrar usuario                    | Imprescindible | Visión del producto                     |
+| RF-002 | Iniciar sesión                       | Imprescindible | Visión del producto                     |
+| RF-003 | Consultar clases                     | Imprescindible | Visión del producto + Entrevista        |
+| RF-004 | Consultar lugares disponibles        | Imprescindible | Entrevista                              |
+| RF-005 | Reservar clase                       | Imprescindible | Visión del producto + Entrevista        |
+| RF-006 | Realizar pago                        | Imprescindible | Visión del producto                     |
+| RF-007 | Cancelar reservación                 | Imprescindible | Entrevista + regla definida             |
+| RF-008 | Consultar historial de reservaciones | Importante     | Visión del producto                     |
+| RF-009 | Registrar asistencia                 | Imprescindible | Visión del producto + Entrevista        |
+| RF-010 | Consultar programa de fidelidad      | Importante     | Propuesta propia validada en entrevista |
+| RF-011 | Calificar clase                      | Deseable       | Visión del producto                     |
+| RF-012 | Registrar testimonio                 | Importante     | Visión del producto + Entrevista        |
+| RF-013 | Registrar clase                      | Imprescindible | Visión del producto + Entrevista        |
+| RF-014 | Modificar clase                      | Imprescindible | Visión del producto + Entrevista        |
+| RF-015 | Registrar horario                    | Imprescindible | Visión del producto + Entrevista        |
+| RF-016 | Registrar maestra                    | Imprescindible | Visión del producto + Entrevista        |
+| RF-017 | Consultar reservaciones              | Imprescindible | Visión del producto + Entrevista        |
+| RF-018 | Consultar pagos                      | Imprescindible | Visión del producto + Entrevista        |
+| RF-019 | Consultar paquetes                   | Importante     | Entrevista                              |
+| RF-020 | Consultar promociones                | Importante     | Entrevista                              |
+| RF-021 | Consultar testimonios                | Importante     | Entrevista                              |
 
 ---
 
-## 5. Casos de uso
+## 3.2 Fichas
 
-A partir de los requisitos anteriores se identificaron los siguientes casos de uso principales:
+### RF-001 · Registrar usuario
 
-| ID | Caso de uso |
-|---|---|
-| CU-01 | Registrarse e iniciar sesión |
-| CU-02 | Consultar clases |
-| CU-03 | Reservar una clase |
-| CU-04 | Realizar pago |
-| CU-05 | Cancelar reservación |
-| CU-06 | Consultar reservaciones |
-| CU-07 | Registrar asistencia |
-| CU-08 | Consultar estrellas |
-| CU-09 | Calificar una clase |
-| CU-10 | Administrar clases |
-| CU-11 | Consultar paquetes y promociones |
+| Campo                      | Contenido                                                                                                                                                                                   |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema registra un nuevo usuario cuando proporciona los datos obligatorios solicitados para crear una cuenta.                                                                           |
+| **Origen**                 | Visión del producto.                                                                                                                                                                        |
+| **Prioridad**              | Imprescindible                                                                                                                                                                              |
+| **Criterio de aceptación** | Al ingresar todos los datos obligatorios con valores válidos, el sistema crea la cuenta. Si falta un dato obligatorio, el registro no se completa y el sistema identifica el dato faltante. |
+| **Relacionado con**        | RF-002, RNF-SEG-001                                                                                                                                                                         |
+
+### RF-002 · Iniciar sesión
+
+| Campo                      | Contenido                                                                                                                                                                         |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema valida las credenciales de una cuenta registrada antes de iniciar una sesión.                                                                                          |
+| **Origen**                 | Visión del producto.                                                                                                                                                              |
+| **Prioridad**              | Imprescindible                                                                                                                                                                    |
+| **Criterio de aceptación** | Al ingresar credenciales válidas, el sistema inicia la sesión correspondiente. Al ingresar credenciales que no coincidan con una cuenta registrada, el sistema rechaza el acceso. |
+| **Relacionado con**        | RF-001, RNF-SEG-001                                                                                                                                                               |
+
+### RF-003 · Consultar clases
+
+| Campo                      | Contenido                                                                                                                                           |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema muestra las clases disponibles con su horario, maestra, duración, precio y cantidad de lugares disponibles.                              |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                   |
+| **Prioridad**              | Imprescindible                                                                                                                                      |
+| **Criterio de aceptación** | Al consultar una clase disponible, el sistema muestra el horario, maestra, duración, precio y la cantidad de lugares disponibles de un máximo de 8. |
+| **Relacionado con**        | RF-004, RF-005, RNF-USA-001, RNF-REN-001                                                                                                            |
+
+### RF-004 · Consultar lugares disponibles
+
+| Campo                      | Contenido                                                                                                                                                                                                                                                 |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema muestra la cantidad actual de lugares disponibles para cada clase, considerando una capacidad máxima de 8 alumnos.                                                                                                                             |
+| **Origen**                 | Entrevista.                                                                                                                                                                                                                                               |
+| **Prioridad**              | Imprescindible                                                                                                                                                                                                                                            |
+| **Criterio de aceptación** | Una clase sin reservaciones deberá mostrar 8 lugares disponibles. Después de cada reservación, la disponibilidad disminuye en un lugar. Después de una cancelación, aumenta en un lugar. La cantidad mostrada nunca puede ser menor que 0 ni mayor que 8. |
+| **Relacionado con**        | RF-003, RF-005, RF-007, RNF-CON-001                                                                                                                                                                                                                       |
+
+### RF-005 · Reservar clase
+
+| Campo                      | Contenido                                                                                                                                                                                                                                         |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema registra una reservación cuando la clase seleccionada tiene al menos un lugar disponible y no ha alcanzado su capacidad máxima de 8 alumnos.                                                                                           |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                                                                                                                 |
+| **Prioridad**              | Imprescindible                                                                                                                                                                                                                                    |
+| **Criterio de aceptación** | Si existen menos de 8 alumnos registrados, el sistema registra la reservación y disminuye la disponibilidad en un lugar. Cuando existen 8 alumnos registrados, el sistema muestra 0 lugares disponibles e impide registrar una nueva reservación. |
+| **Relacionado con**        | RF-003, RF-004, RF-006, RNF-CON-001                                                                                                                                                                                                               |
+
+### RF-006 · Realizar pago
+
+| Campo                      | Contenido                                                                                                                                                        |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema registra el pago correspondiente a una clase o paquete cuando la transacción es confirmada.                                                           |
+| **Origen**                 | Visión del producto.                                                                                                                                             |
+| **Prioridad**              | Imprescindible                                                                                                                                                   |
+| **Criterio de aceptación** | Cuando la transacción se confirma correctamente, el pago queda registrado como pagado. Cuando la transacción no se confirma, el pago no cambia al estado pagado. |
+| **Relacionado con**        | RF-005, RF-018, RF-019, RNF-SEG-001                                                                                                                              |
+
+### RF-007 · Cancelar reservación
+
+| Campo                      | Contenido                                                                                                                                                                                                                                                                                                                         |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema cancela una reservación, libera uno de los 8 lugares de la clase y aplica las reglas establecidas según el tiempo restante para el inicio de la clase.                                                                                                                                                                 |
+| **Origen**                 | Entrevista.                                                                                                                                                                                                                                                                                                                       |
+| **Prioridad**              | Imprescindible                                                                                                                                                                                                                                                                                                                    |
+| **Criterio de aceptación** | Si la cancelación se realiza con 3 horas o más de anticipación, el sistema libera un lugar sin descontar estrellas. Si se realiza con menos de 3 horas, libera el lugar, descuenta una estrella del programa de fidelidad y registra el crédito de la clase como utilizado. La disponibilidad nunca deberá superar los 8 lugares. |
+| **Relacionado con**        | RF-004, RF-010, RNF-CON-001                                                                                                                                                                                                                                                                                                       |
+
+### RF-008 · Consultar historial de reservaciones
+
+| Campo                      | Contenido                                                                                                                      |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**            | El sistema muestra las reservaciones realizadas por el cliente con la clase, fecha y estado correspondiente.                   |
+| **Origen**                 | Visión del producto.                                                                                                           |
+| **Prioridad**              | Importante                                                                                                                     |
+| **Criterio de aceptación** | Al consultar el historial, se muestran todas las reservaciones asociadas a la cuenta del cliente con su clase, fecha y estado. |
+| **Relacionado con**        | RF-005, RF-007                                                                                                                 |
+
+### RF-009 · Registrar asistencia
+
+| Campo                      | Contenido                                                                                                                                                                                                          |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**            | El sistema registra el estado de asistencia de cada cliente que tenga una reservación para una clase.                                                                                                              |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                                                                                  |
+| **Prioridad**              | Imprescindible                                                                                                                                                                                                     |
+| **Criterio de aceptación** | Al asignar y guardar el estado de asistencia de un cliente, el mismo estado se muestra al volver a consultar la clase. La lista de asistentes no podrá contener más de 8 alumnos registrados para una misma clase. |
+| **Relacionado con**        | RF-005, RF-010, RNF-CON-001                                                                                                                                                                                        |
+
+### RF-010 · Consultar programa de fidelidad
+
+| Campo                      | Contenido                                                                                                                                                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema muestra el programa de fidelidad del cliente con su cantidad actual de estrellas y los beneficios relacionados con ellas.                                                                                   |
+| **Origen**                 | Propuesta propia validada en entrevista.                                                                                                                                                                               |
+| **Prioridad**              | Importante                                                                                                                                                                                                             |
+| **Criterio de aceptación** | Al consultar el programa de fidelidad, se muestra el conteo actual de estrellas del cliente. Después de una acción que genere una penalización, el conteo disminuye exactamente una estrella y muestra el nuevo total. |
+| **Relacionado con**        | RF-007, RF-009, RF-020                                                                                                                                                                                                 |
+
+### RF-011 · Calificar clase
+
+| Campo                      | Contenido                                                                                                                                                                      |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**            | El sistema registra la calificación de una clase únicamente cuando el cliente tiene una asistencia registrada para esa clase.                                                  |
+| **Origen**                 | Visión del producto.                                                                                                                                                           |
+| **Prioridad**              | Deseable                                                                                                                                                                       |
+| **Criterio de aceptación** | Si el cliente tiene asistencia registrada, puede guardar una calificación asociada a esa clase. Si no existe asistencia registrada, el sistema impide guardar la calificación. |
+| **Relacionado con**        | RF-009                                                                                                                                                                         |
+
+### RF-012 · Registrar testimonio
+
+| Campo                      | Contenido                                                                                                                                                                                |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema registra un testimonio de un cliente únicamente cuando tiene una asistencia registrada para la clase correspondiente.                                                         |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                                                        |
+| **Prioridad**              | Importante                                                                                                                                                                               |
+| **Criterio de aceptación** | Si existe una asistencia registrada, el cliente puede escribir y guardar un testimonio asociado a la clase. Si no existe asistencia registrada, el sistema impide guardar el testimonio. |
+| **Relacionado con**        | RF-009, RF-011, RF-021                                                                                                                                                                   |
+
+### RF-013 · Registrar clase
+
+| Campo                      | Contenido                                                                                                                                                                                                               |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema registra una nueva clase con una capacidad máxima de 8 alumnos cuando el administrador proporciona todos los datos obligatorios.                                                                             |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                                                                                       |
+| **Prioridad**              | Imprescindible                                                                                                                                                                                                          |
+| **Criterio de aceptación** | Al ingresar todos los datos obligatorios de una clase, el registro queda guardado con una capacidad máxima de 8 alumnos y aparece al consultar las clases. Si falta un dato obligatorio, el sistema no guarda la clase. |
+| **Relacionado con**        | RF-003, RF-004, RF-015, RF-016                                                                                                                                                                                          |
+
+### RF-014 · Modificar clase
+
+| Campo                      | Contenido                                                                                                                                                                                                 |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema actualiza la información de una clase registrada cuando el administrador confirma una modificación válida.                                                                                     |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                                                                         |
+| **Prioridad**              | Imprescindible                                                                                                                                                                                            |
+| **Criterio de aceptación** | Después de modificar y confirmar un dato válido, la nueva información se muestra al volver a consultar la clase. La modificación no podrá permitir que una clase supere la capacidad máxima de 8 alumnos. |
+| **Relacionado con**        | RF-003, RF-013                                                                                                                                                                                            |
+
+### RF-015 · Registrar horario
+
+| Campo                      | Contenido                                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**            | El sistema registra una fecha y hora para una clase existente.                                                                       |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                    |
+| **Prioridad**              | Imprescindible                                                                                                                       |
+| **Criterio de aceptación** | Al registrar una fecha y hora válidas para una clase, el horario queda asociado a la clase seleccionada y se muestra al consultarla. |
+| **Relacionado con**        | RF-003, RF-013                                                                                                                       |
+
+### RF-016 · Registrar maestra
+
+| Campo                      | Contenido                                                                                                                                                      |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema registra una maestra cuando el administrador proporciona todos los datos obligatorios.                                                              |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                              |
+| **Prioridad**              | Imprescindible                                                                                                                                                 |
+| **Criterio de aceptación** | Al ingresar todos los datos obligatorios de la maestra, el registro queda guardado y la maestra aparece entre las opciones disponibles para asignar una clase. |
+| **Relacionado con**        | RF-013                                                                                                                                                         |
+
+### RF-017 · Consultar reservaciones
+
+| Campo                      | Contenido                                                                                                                                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**            | El sistema muestra las reservaciones registradas para la clase seleccionada.                                                                                                                                                         |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                                                                                                    |
+| **Prioridad**              | Imprescindible                                                                                                                                                                                                                       |
+| **Criterio de aceptación** | Al seleccionar una clase, se muestran todas las reservaciones activas asociadas a esa clase. El número de reservaciones activas nunca podrá ser mayor a 8. Una reservación cancelada deja de aparecer como activa y libera un lugar. |
+| **Relacionado con**        | RF-004, RF-005, RF-007, RNF-CON-001                                                                                                                                                                                                  |
+
+### RF-018 · Consultar pagos
+
+| Campo                      | Contenido                                                                                                                                        |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Descripción**            | El sistema muestra el estado del pago relacionado con una reservación.                                                                           |
+| **Origen**                 | Visión del producto y entrevista.                                                                                                                |
+| **Prioridad**              | Imprescindible                                                                                                                                   |
+| **Criterio de aceptación** | Al consultar una reservación, se muestra el estado de pago correspondiente como pagado o pendiente de acuerdo con el registro de la transacción. |
+| **Relacionado con**        | RF-006, RF-017                                                                                                                                   |
+
+### RF-019 · Consultar paquetes
+
+| Campo                      | Contenido                                                                                                                                                                                 |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema muestra los paquetes activos disponibles para los clientes.                                                                                                                    |
+| **Origen**                 | Entrevista.                                                                                                                                                                               |
+| **Prioridad**              | Importante                                                                                                                                                                                |
+| **Criterio de aceptación** | Al consultar los paquetes, se muestran todos los paquetes activos con su nombre, precio, cantidad de clases y condiciones de uso. Los paquetes inactivos no se muestran como disponibles. |
+| **Relacionado con**        | RF-006                                                                                                                                                                                    |
+
+### RF-020 · Consultar promociones
+
+| Campo                      | Contenido                                                                                                                                                                                                                     |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema muestra las promociones activas y las condiciones necesarias para obtener cada beneficio.                                                                                                                          |
+| **Origen**                 | Entrevista.                                                                                                                                                                                                                   |
+| **Prioridad**              | Importante                                                                                                                                                                                                                    |
+| **Criterio de aceptación** | Al consultar las promociones, se muestran todas las promociones activas con su beneficio y condiciones. Cuando una promoción dependa del programa de fidelidad, se muestra la cantidad de estrellas necesaria para obtenerla. |
+| **Relacionado con**        | RF-006, RF-010                                                                                                                                                                                                                |
+
+### RF-021 · Consultar testimonios
+
+| Campo                      | Contenido                                                                                                                                                                                       |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Descripción**            | El sistema muestra los testimonios registrados por clientes que hayan asistido a una clase.                                                                                                     |
+| **Origen**                 | Entrevista.                                                                                                                                                                                     |
+| **Prioridad**              | Importante                                                                                                                                                                                      |
+| **Criterio de aceptación** | Al consultar la sección de testimonios, se muestran todos los testimonios disponibles. Si no existe ningún testimonio registrado, el sistema indica que todavía no hay testimonios disponibles. |
+| **Relacionado con**        | RF-012                                                                                                                                                                                          |
 
 ---
 
-## 6. Trazabilidad
+# 4. Requisitos no funcionales
 
-| Requisito | Origen | Caso de uso | Elemento del prototipo |
-|---|---|---|---|
-| RF-001 | Visión del producto | CU-01 Registrarse e iniciar sesión | Pantalla de registro e inicio de sesión |
-| RF-002 | Visión del producto + Entrevista | CU-02 Consultar clases | Pantalla de clases |
-| RF-003 | Entrevista | CU-02 Consultar clases | Lugares disponibles de la clase |
-| RF-004 | Visión del producto + Entrevista | CU-03 Reservar una clase | Pantalla de detalle y reservación |
-| RF-005 | Visión del producto | CU-04 Realizar pago | Pantalla de pago |
-| RF-006 | Entrevista + regla definida | CU-05 Cancelar reservación | Pantalla de mis reservaciones |
-| RF-007 | Visión del producto | CU-06 Consultar reservaciones | Historial de clases |
-| RF-008 | Visión del producto + Entrevista | CU-07 Registrar asistencia | Lista de asistentes |
-| RF-009 | Visión del producto + Entrevista | CU-08 Consultar estrellas | Perfil y estrellas |
-| RF-010 | Visión del producto | CU-09 Calificar una clase | Pantalla de calificación |
-| RF-011 | Visión del producto + Entrevista | CU-10 Administrar clases | Panel del administrador |
-| RF-012 | Entrevista | CU-11 Consultar paquetes y promociones | Pantalla de paquetes y promociones |
+## 4.1 Resumen
+
+Los requisitos no funcionales se clasifican utilizando las claves de atributos de calidad establecidas en la Guía de redacción de requisitos.
+
+| ID          | Atributo      | Nombre                             | Prioridad      | Origen                       |
+| ----------- | ------------- | ---------------------------------- | -------------- | ---------------------------- |
+| RNF-REN-001 | Rendimiento   | Mostrar información de clases      | Importante     | Derivado del tipo de sistema |
+| RNF-SEG-001 | Seguridad     | Restringir acceso por usuario      | Imprescindible | Derivado del tipo de sistema |
+| RNF-USA-001 | Usabilidad    | Completar reservación              | Imprescindible | Entrevista + tipo de sistema |
+| RNF-CON-001 | Confiabilidad | Mantener disponibilidad de lugares | Imprescindible | Entrevista                   |
+
+## 4.2 Fichas
+
+### Rendimiento
+
+#### RNF-REN-001 · Mostrar información de clases
+
+| Campo                   | Contenido                                                                                                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Atributo de calidad** | Rendimiento                                                                                                                                                                    |
+| **Descripción**         | La información de las clases disponibles se muestra en un máximo de 3 segundos después de solicitar la consulta.                                                               |
+| **Métrica**             | Tiempo transcurrido entre la solicitud de consulta y el despliegue completo de la información, con hasta 100 clases registradas. El tiempo máximo aceptado será de 3 segundos. |
+| **Origen**              | Derivado del tipo de sistema: aplicación web de consulta y reservación de clases.                                                                                              |
+| **Prioridad**           | Importante                                                                                                                                                                     |
+| **Por qué importa**     | Los clientes necesitan consultar las clases de manera rápida para realizar una reservación sin depender de la atención mediante mensajes.                                      |
+| **Afecta a**            | RF-003, RF-004, RF-005                                                                                                                                                         |
+
+### Seguridad
+
+#### RNF-SEG-001 · Restringir acceso por usuario
+
+| Campo                   | Contenido                                                                                                                          |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Atributo de calidad** | Seguridad                                                                                                                          |
+| **Descripción**         | El sistema rechaza el 100 % de los intentos de acceso a funciones que no correspondan al tipo de usuario autenticado.              |
+| **Métrica**             | En 10 intentos de acceso no autorizado por cada tipo de usuario, los 10 intentos deberán ser rechazados.                           |
+| **Origen**              | Derivado del tipo de sistema y de la existencia de los roles Cliente, Maestra y Administrador definidos en la Visión del producto. |
+| **Prioridad**           | Imprescindible                                                                                                                     |
+| **Por qué importa**     | Evita que un usuario tenga acceso a información o funciones que corresponden a otro tipo de usuario.                               |
+| **Afecta a**            | RF-002, RF-009, RF-013, RF-014, RF-015, RF-016, RF-017, RF-018                                                                     |
+
+### Usabilidad
+
+#### RNF-USA-001 · Completar reservación
+
+| Campo                   | Contenido                                                                                                                                          |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Atributo de calidad** | Usabilidad                                                                                                                                         |
+| **Descripción**         | Al menos 9 de cada 10 usuarios de prueba completan una reservación sin recibir ayuda externa.                                                      |
+| **Métrica**             | Prueba con 10 personas que realicen el proceso desde consultar una clase hasta confirmar la reservación. Al menos 9 deberán completarlo sin ayuda. |
+| **Origen**              | Entrevista y derivado del tipo de sistema.                                                                                                         |
+| **Prioridad**           | Imprescindible                                                                                                                                     |
+| **Por qué importa**     | Si el proceso resulta complicado, los clientes podrían continuar realizando las reservaciones mediante mensajes en lugar de utilizar VYTTA.        |
+| **Afecta a**            | RF-003, RF-004, RF-005                                                                                                                             |
+
+### Confiabilidad
+
+#### RNF-CON-001 · Mantener disponibilidad de lugares
+
+| Campo                   | Contenido                                                                                                                                                                                                                                                                                            |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Atributo de calidad** | Confiabilidad                                                                                                                                                                                                                                                                                        |
+| **Descripción**         | La cantidad de lugares disponibles coincide con el número real de reservaciones registradas, considerando una capacidad máxima de 8 alumnos por clase.                                                                                                                                               |
+| **Métrica**             | Durante una prueba de 20 operaciones consecutivas de reservación y cancelación, las 20 deberán producir la cantidad correcta de lugares disponibles. El sistema nunca deberá mostrar menos de 0 ni más de 8 lugares disponibles y deberá impedir que una clase tenga más de 8 reservaciones activas. |
+| **Origen**              | Entrevista.                                                                                                                                                                                                                                                                                          |
+| **Prioridad**           | Imprescindible                                                                                                                                                                                                                                                                                       |
+| **Por qué importa**     | Una disponibilidad incorrecta puede ocasionar sobrecupos o impedir que un cliente reserve un lugar que realmente se encuentra disponible.                                                                                                                                                            |
+| **Afecta a**            | RF-004, RF-005, RF-007, RF-009, RF-017                                                                                                                                                                                                                                                               |
 
 ---
 
-## 7. Registro de cambios
+# 5. Casos de uso
 
-| Fecha | Requisito | Qué cambió | Por qué |
-|---|---|---|---|
-| 10/09/2026 | Documento | Se creó la primera versión de la especificación de requisitos de VYTTA. | Era necesario definir de una manera más clara las funciones y necesidades del sistema. |
-| 21/09/2026 | RF-002 | Se agregó más información que el cliente podrá consultar antes de reservar una clase. | Durante la entrevista se vio que un cliente necesita conocer información como el horario, maestra, duración, precio y lugares disponibles. |
-| 21/09/2026 | RF-006 | Se estableció que una cancelación deberá realizarse mínimo 4 horas antes para no recibir una penalización. | La regla de cancelación todavía no estaba completamente definida. |
-| 21/09/2026 | RF-009 | Se mantuvo el sistema de estrellas y se definió mejor cómo se relacionará con las cancelaciones e inasistencias. | Durante la entrevista se consideró que las estrellas podían ser una buena forma de reconocer a los clientes constantes y diferenciar a VYTTA. |
-| 21/09/2026 | RF-012 | Se agregaron los paquetes y promociones. | Durante la entrevista se identificó que los clientes también necesitan conocer estas opciones antes de reservar. |
+Los casos de uso principales de VYTTA se relacionan con los requisitos funcionales que realizan.
+
+| ID    | Caso de uso                     | Actor principal                 | Requisitos relacionados                |
+| ----- | ------------------------------- | ------------------------------- | -------------------------------------- |
+| CU-01 | Registrar usuario               | Cliente                         | RF-001                                 |
+| CU-02 | Iniciar sesión                  | Cliente, Maestra, Administrador | RF-002                                 |
+| CU-03 | Consultar clases                | Cliente                         | RF-003, RF-004, RF-019, RF-020, RF-021 |
+| CU-04 | Reservar clase                  | Cliente                         | RF-004, RF-005, RF-006                 |
+| CU-05 | Cancelar reservación            | Cliente                         | RF-004, RF-007, RF-010                 |
+| CU-06 | Registrar asistencia            | Maestra                         | RF-009                                 |
+| CU-07 | Consultar programa de fidelidad | Cliente                         | RF-010, RF-020                         |
+| CU-08 | Registrar clase                 | Administrador                   | RF-013, RF-015, RF-016                 |
+
+---
+
+## CU-04 · Reservar clase
+
+**Actor principal:** Cliente
+
+**Objetivo:** Registrar un lugar para el cliente en una clase disponible, respetando la capacidad máxima de 8 alumnos.
+
+### Precondiciones
+
+- El cliente tiene una cuenta registrada.
+- El cliente ha iniciado sesión.
+- La clase se encuentra registrada en VYTTA.
+- La clase tiene al menos un lugar disponible.
+- La clase no ha alcanzado la capacidad máxima de 8 alumnos.
+
+### Escenario principal
+
+1. El cliente consulta las clases disponibles.
+2. El sistema muestra la información de las clases.
+3. El cliente selecciona una clase.
+4. El sistema muestra la información de la clase y la cantidad de lugares disponibles.
+5. El cliente solicita reservar la clase.
+6. El sistema comprueba que la clase tiene menos de 8 alumnos registrados.
+7. El sistema registra la reservación.
+8. El sistema disminuye en uno la cantidad de lugares disponibles.
+9. El sistema muestra la reservación registrada al cliente.
+
+### Flujo alterno 1 · Clase sin lugares disponibles
+
+1. El cliente selecciona una clase.
+2. El sistema comprueba la cantidad de alumnos registrados.
+3. El sistema detecta que la clase ya tiene 8 alumnos registrados.
+4. El sistema muestra 0 lugares disponibles.
+5. El sistema impide registrar una nueva reservación.
+6. El sistema informa al cliente que la clase ya no tiene lugares disponibles.
+
+### Flujo alterno 2 · Pago no confirmado
+
+1. El cliente inicia el proceso correspondiente al pago.
+2. La transacción no es confirmada.
+3. El sistema no registra el pago como pagado.
+4. El sistema informa que el pago se encuentra pendiente o no fue completado.
+
+### Postcondición
+
+Si el proceso se completa correctamente, la reservación queda registrada y la cantidad de lugares disponibles disminuye en uno.
+
+El número total de reservaciones activas de una clase nunca podrá superar los **8 alumnos**.
+
+**Requisitos relacionados:** RF-003, RF-004, RF-005, RF-006, RNF-USA-001 y RNF-CON-001.
+
+---
+
+# 6. Trazabilidad
+
+| Requisito | Origen                                  | Caso de uso                                                                | Elemento del prototipo                             |
+| --------- | --------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------- |
+| RF-001    | Visión del producto                     | CU-01 Registrar usuario                                                    | Pantalla de registro                               |
+| RF-002    | Visión del producto                     | CU-02 Iniciar sesión                                                       | Pantalla de inicio de sesión                       |
+| RF-003    | Visión + Entrevista                     | CU-03 Consultar clases                                                     | Pantalla de clases                                 |
+| RF-004    | Entrevista                              | CU-03 Consultar clases / CU-04 Reservar clase / CU-05 Cancelar reservación | Indicador de lugares disponibles de un máximo de 8 |
+| RF-005    | Visión + Entrevista                     | CU-04 Reservar clase                                                       | Pantalla de reservación                            |
+| RF-006    | Visión del producto                     | CU-04 Reservar clase                                                       | Pantalla de pago                                   |
+| RF-007    | Entrevista                              | CU-05 Cancelar reservación                                                 | Mis reservaciones                                  |
+| RF-008    | Visión del producto                     | —                                                                          | Historial de reservaciones                         |
+| RF-009    | Visión + Entrevista                     | CU-06 Registrar asistencia                                                 | Lista de asistentes con máximo de 8 alumnos        |
+| RF-010    | Propuesta propia validada en entrevista | CU-07 Consultar programa de fidelidad / CU-05 Cancelar reservación         | Programa de fidelidad                              |
+| RF-011    | Visión del producto                     | —                                                                          | Calificación de clase                              |
+| RF-012    | Visión + Entrevista                     | —                                                                          | Formulario de testimonio                           |
+| RF-013    | Visión + Entrevista                     | CU-08 Registrar clase                                                      | Panel del administrador                            |
+| RF-014    | Visión + Entrevista                     | —                                                                          | Edición de clase                                   |
+| RF-015    | Visión + Entrevista                     | CU-08 Registrar clase                                                      | Registro de horario                                |
+| RF-016    | Visión + Entrevista                     | CU-08 Registrar clase                                                      | Registro de maestra                                |
+| RF-017    | Visión + Entrevista                     | CU-04 Reservar clase / CU-05 Cancelar reservación                          | Lista de reservaciones con máximo de 8 alumnos     |
+| RF-018    | Visión + Entrevista                     | —                                                                          | Estado de pago                                     |
+| RF-019    | Entrevista                              | CU-03 Consultar clases                                                     | Sección de paquetes                                |
+| RF-020    | Entrevista                              | CU-03 Consultar clases / CU-07 Consultar programa de fidelidad             | Sección de promociones                             |
+| RF-021    | Entrevista                              | CU-03 Consultar clases                                                     | Sección de testimonios                             |
+
+---
+
+# 7. Registro de cambios
+
+| Fecha      | Requisito                                                                  | Qué cambió                                                                                                                                                          | Por qué                                                                                                    |
+| ---------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| 10/09/2026 | Documento                                                                  | Se creó la primera versión de la especificación de requisitos de VYTTA.                                                                                             | Documentar las funciones y necesidades iniciales del sistema.                                              |
+| 21/09/2026 | RF-007                                                                     | Se definió la regla de cancelación con un mínimo de 3 horas de anticipación para evitar una penalización.                                                           | Incorporar la regla obtenida después de la entrevista.                                                     |
+| 21/09/2026 | RF-010                                                                     | Se definió el programa de fidelidad mediante un conteo de estrellas.                                                                                                | Incorporar la propuesta validada durante la entrevista.                                                    |
+| 28/09/2026 | RF-001 / RF-002                                                            | Se separaron las funciones Registrar usuario e Iniciar sesión.                                                                                                      | Mantener una sola función por requisito.                                                                   |
+| 28/09/2026 | RF-010                                                                     | Se cambió el nombre de Consultar estrellas a Consultar programa de fidelidad.                                                                                       | Las estrellas representan el conteo utilizado por el programa, no el nombre de la función.                 |
+| 28/09/2026 | RF-011 / RF-012                                                            | Se separaron Calificar clase y Registrar testimonio.                                                                                                                | Mantener una sola función por requisito.                                                                   |
+| 28/09/2026 | RF-013 a RF-018                                                            | Se especificaron individualmente las funciones relacionadas con la gestión de clases.                                                                               | Evitar requisitos generales que contengan varias acciones.                                                 |
+| 28/09/2026 | RF-019 / RF-020                                                            | Se separaron Consultar paquetes y Consultar promociones.                                                                                                            | Mantener una sola función por requisito.                                                                   |
+| 28/09/2026 | RF-021                                                                     | Se agregó Consultar testimonios sin modificar los identificadores existentes.                                                                                       | Incorporar la consulta de experiencias de otros clientes y respetar la estabilidad de los identificadores. |
+| 28/09/2026 | RF-006                                                                     | Se eliminó la referencia a una plataforma específica de pago dentro del requisito.                                                                                  | Describir qué debe realizar el sistema y no imponer una solución técnica.                                  |
+| 28/09/2026 | RF-004 / RF-005 / RF-007 / RF-009 / RF-013 / RF-014 / RF-017 / RNF-CON-001 | Se estableció una capacidad máxima de 8 alumnos por clase y se actualizaron las reglas relacionadas con reservaciones, cancelaciones, asistencias y disponibilidad. | Definir de manera exacta la capacidad de cada clase y evitar sobrecupos.                                   |
+| 28/09/2026 | Requisitos funcionales                                                     | Se reescribieron las descripciones con la estructura “El sistema + verbo firme + objeto + condición”.                                                               | Cumplir la Guía de redacción de requisitos.                                                                |
+| 28/09/2026 | Requisitos no funcionales                                                  | Se ajustaron los identificadores y las métricas a los atributos establecidos en la Guía de redacción.                                                               | Cumplir la nomenclatura y hacer los requisitos medibles y verificables.                                    |
 
 ---
