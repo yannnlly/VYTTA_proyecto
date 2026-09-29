@@ -1,6 +1,6 @@
 # Ficha de dominio · VYTTA
 
-**Sistema:** VYTTA   
+**Sistema:** VYTTA - Sistema web de reservación y gestión de clases
 **Autor:** Luz Yanelly Garduño Paniagua  
 
 ---
