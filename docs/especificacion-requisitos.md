@@ -493,17 +493,3 @@ El número total de reservaciones activas de una clase nunca podrá superar los 
 | RF-021 | Entrevista | CU-03 Consultar clases | Sección de testimonios |
 
 ---
-
-# 7. Registro de cambios
-
-| Fecha | Requisito | Qué cambió | Por qué |
-| --- | --- | --- | --- |
-| 10/09/2026 | Documento | Se creó la primera versión de la especificación de requisitos de VYTTA. | Documentar las funciones y necesidades iniciales del sistema. |
-| 21/09/2026 | RF-007 | Se definió la regla de cancelación con un mínimo de 3 horas de anticipación para evitar una penalización. | Incorporar la regla obtenida después de la entrevista. |
-| 21/09/2026 | RF-010 | Se definió el programa de fidelidad mediante un conteo de estrellas. | Incorporar la propuesta validada durante la entrevista. |
-| 26/09/2026 | RF-001 / RF-002 | Se separaron las funciones Registrar usuario e Iniciar sesión. | Mantener una sola función por requisito. |
-| 26/09/2026 | RF-010 | Se cambió el nombre de Consultar estrellas a Consultar programa de fidelidad. | Las estrellas representan el conteo utilizado por el programa, no el nombre de la función. |
-| 26/09/2026 | RF-011 / RF-012 | Se separaron Calificar clase y Registrar testimonio. | Mantener una sola función por requisito. |
-| 26/09/2026 | RF-013 a RF-018 | Se especificaron individualmente las funciones relacionadas con la gestión de clases. | Evitar requisitos generales que contengan varias acciones. |
-| 28/09/2026 | RF-019 / RF-020 | Se separaron Consultar paquetes y Consultar promociones. | Mantener una sola función por requisito. |
-| 29/09/2026 | RF-003 / RF-009 / RF-017 / RF-018 | Se especificó que las maestras pueden consultar sus clases asignadas, consultar las personas registradas, verificar el estado de pago de las reservaciones y registrar asistencia. | Permitir que las maestras tengan la información necesaria y actualizada antes de impartir una clase. |
