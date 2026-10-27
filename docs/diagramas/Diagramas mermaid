@@ -1,0 +1,98 @@
+ # Diagramas Mermaid - VYTTA
+
+**Sistema:** VYTTA - Sistema web de reservación y gestión de clases 
+
+## 1. Diagrama de contexto
+
+Este diagrama muestra las personas que utilizan VYTTA y cómo se relacionan con el sistema.
+
+```mermaid
+flowchart TD
+    cliente([Cliente])
+    maestra([Maestra])
+    admin([Administrador])
+    vytta[Sistema VYTTA]
+    pagos[Servicio de pagos]
+
+    cliente -->|Consulta y reserva clases| vytta
+    maestra -->|Consulta clases y registra asistencia| vytta
+    admin -->|Organiza clases y horarios| vytta
+    vytta -->|Realiza cobros| pagos
+
+    style vytta fill:#f7e2e2,color:#333
+```
+
+## 2. Diagrama de contenedores
+
+Aquí muestro las partes principales que tendría VYTTA y cómo se comunican entre ellas. Las tecnologías son una propuesta para desarrollar el sistema.
+
+```mermaid
+flowchart TD
+    cliente([Cliente])
+    maestra([Maestra])
+    admin([Administrador])
+
+    subgraph sistema[Sistema VYTTA]
+        web["Página web<br/>HTML, CSS y JavaScript"]
+        api["Servidor<br/>Node.js"]
+        db[("Base de datos<br/>PostgreSQL")]
+    end
+
+    pagos[Servicio externo de pagos]
+
+    cliente -->|Utiliza| web
+    maestra -->|Utiliza| web
+    admin -->|Administra| web
+
+    web -->|HTTPS y JSON| api
+    api -->|Guarda y consulta datos| db
+    api -->|Solicita pagos| pagos
+
+    style api fill:#f7e2e2,color:#333
+```
+
+## 3. Diagrama de componentes
+
+En este diagrama muestro los módulos que tendría VYTTA. Cada uno se encarga de una función diferente, pero todos trabajan dentro del mismo sistema.
+
+```mermaid
+flowchart TD
+    web[Pagina web VYTTA]
+
+    subgraph sistema[Servidor VYTTA]
+        usuarios[Usuarios]
+        clases[Clases y horarios]
+        reservas[Reservaciones]
+        pagos[Pagos]
+        asistencia[Asistencias]
+        fidelidad[Programa de fidelidad]
+        opiniones[Opiniones y testimonios]
+    end
+
+    db[(Base de datos)]
+    servicio[Servicio de pagos]
+
+    web --> usuarios
+    web --> clases
+    web --> reservas
+    web --> pagos
+    web --> asistencia
+    web --> fidelidad
+    web --> opiniones
+
+    reservas -->|Revisa lugares disponibles| clases
+    reservas -->|Consulta pagos| pagos
+    asistencia -->|Consulta reservaciones| reservas
+    asistencia -->|Registra faltas| fidelidad
+    reservas -->|Registra cancelaciones tardías| fidelidad
+    opiniones -->|Verifica asistencia| asistencia
+
+    usuarios --> db
+    clases --> db
+    reservas --> db
+    pagos --> db
+    asistencia --> db
+    fidelidad --> db
+    opiniones --> db
+
+    pagos -->|Procesa cobros| servicio
