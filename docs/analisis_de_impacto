@@ -1,0 +1,195 @@
+# Análisis de impacto de SC-001: Cancelaciones realizadas por el estudio
+
+> Plantilla de análisis de impacto · Ingeniería de Software I · SIS3407
+> Sistema: VYTTA — Sistema web de reservación y gestión de clases
+
+---
+
+## Solicitud que se analiza
+
+**Referencia:** `sc-001-cancelaciones-del-estudio.md`
+**Solicitante:** Jesús Cendejas
+**Matrícula:** 00544774
+**Rol:** Dupla de revisión, desde la perspectiva de un cliente.
+**Fecha de solicitud:** 12 de noviembre de 2026.
+
+La solicitud propone que, cuando el estudio cancele una clase, los clientes reciban una notificación dentro de VYTTA, sus reservaciones aparezcan como canceladas por el estudio y no pierdan estrellas de fidelidad ni el crédito de la clase.
+
+El objetivo de este análisis es identificar qué partes del sistema deben modificarse, qué riesgos existen y cuánto esfuerzo podría requerir el cambio.
+
+## Traducción a términos del sistema
+
+La solicitud significa incorporar a VYTTA una nueva situación de cancelación: cuando el Administrador cancela una Clase que ya tiene Reservaciones confirmadas.
+
+Actualmente, el sistema contempla la cancelación realizada por el Cliente mediante el requisito RF-007, con un límite de tres horas de anticipación. Sin embargo, es necesario diferenciar esta situación de una cancelación realizada por el estudio.
+
+Para atender la solicitud se proponen los siguientes ajustes:
+
+1. **Clase:** permitir identificar cuándo una clase fue cancelada por el estudio.
+2. **Reservación:** distinguir una reservación cancelada por el cliente de una cancelada por el estudio.
+3. **Administrador:** incorporar la acción de cancelar una clase y sus reservaciones asociadas.
+4. **Fidelidad:** evitar que se descuenten estrellas cuando la cancelación sea responsabilidad del estudio.
+5. **Pago:** permitir identificar los créditos que deben recuperarse o los pagos que requieren devolución.
+6. **Notificaciones:** permitir que los clientes visualicen dentro de VYTTA un aviso sobre la cancelación de su clase.
+
+La regla principal será que una cancelación realizada por el estudio no debe aplicar las penalizaciones establecidas para las cancelaciones tardías de los clientes.
+
+## Impacto directo
+
+Los siguientes artefactos necesitan modificaciones para incorporar el cambio solicitado.
+
+| Artefacto                 | Unidad | Qué hay que cambiar                                                                                                                                                                                 |
+| ------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Requisito RF-007          | 2      | Aclarar que la regla de cancelación con tres horas de anticipación corresponde a las cancelaciones realizadas por el cliente.                                                                       |
+| Nuevo requisito funcional | 2      | Definir la cancelación de clases por parte del Administrador, incluyendo notificaciones, protección de fidelidad y recuperación de créditos o pagos.                                                |
+| Diagrama de casos de uso  | 2      | Incorporar el caso de uso "Cancelar clase por el estudio" para el Administrador y contemplar el aviso a los clientes afectados.                                                                     |
+| Diagrama de clases        | 4      | Revisar Clase, Reservación, Pago y las operaciones relacionadas con la cancelación. Incorporar la distinción del motivo de cancelación y la información necesaria para las notificaciones.          |
+| Diagrama de secuencia     | 4      | Agregar una secuencia donde el Administrador cancela una clase, el sistema identifica las reservaciones afectadas, conserva la fidelidad, gestiona los créditos o devoluciones y genera los avisos. |
+| Interfaz de usuario       | 2      | Incorporar la opción de cancelar clases para el Administrador y mostrar avisos de cancelación a los clientes.                                                                                       |
+
+## Impacto indirecto
+
+Además de las modificaciones principales, existen elementos que podrían verse afectados porque dependen del funcionamiento de las reservaciones, los pagos y la fidelidad.
+
+| Artefacto                                 | Unidad | Por qué se ve afectado                                                                                                                                                                                   |
+| ----------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Registro de decisión arquitectónica (ADR) | 3      | Se debe revisar si las decisiones existentes contemplan cómo coordinar cancelaciones, pagos y fidelidad. Si no requieren cambios, se documentará sin impacto.                                            |
+| Diagrama de contexto C4                   | 3      | Sin impacto previsto. Los usuarios y el proveedor externo de pagos siguen siendo los mismos.                                                                                                             |
+| Diagrama de contenedores C4               | 3      | Se deben revisar las responsabilidades y conexiones relacionadas con reservaciones, pagos y notificaciones. Si la arquitectura actual permite estas funciones, no sería necesario agregar un contenedor. |
+| Diagrama de componentes                   | 4      | Se deben revisar las conexiones entre reservaciones, pagos, fidelidad y la función de notificaciones.                                                                                                    |
+| Diagrama de paquetes                      | 4      | Se deben revisar las dependencias de los paquetes de Reservaciones, Pagos y Fidelidad.                                                                                                                   |
+| Máquina de estados                        | 4      | Diferenciar la cancelación realizada por el estudio y comprobar que no aplique penalizaciones al cliente.                                                                                                |
+| Diagrama de actividad                     | 4      | Revisar el flujo de cancelación para contemplar la intervención del Administrador y las acciones posteriores.                                                                                            |
+| Base de datos                             | 3      | Revisar cómo se almacenan el motivo de cancelación, los créditos, las devoluciones y los avisos.                                                                                                         |
+| Pruebas del sistema                       | 4      | Agregar pruebas para verificar que las reservaciones se cancelen correctamente y que los clientes no pierdan beneficios.                                                                                 |
+
+## Lo que queda sin tocar
+
+Después de revisar el alcance de la solicitud, se considera que las siguientes funciones no necesitan modificaciones en sus reglas principales:
+
+- **Registro e inicio de sesión:** los usuarios continuarán utilizando sus cuentas de la misma manera.
+- **Consulta de clases:** los clientes podrán seguir consultando horarios, maestras y disponibilidad.
+- **Reservación de clases:** el proceso normal para reservar una clase disponible se mantiene.
+- **Cupo máximo:** cada clase seguirá teniendo un límite de ocho personas.
+- **Regla de cancelación del cliente:** se mantiene el límite de tres horas para las cancelaciones realizadas por el propio cliente.
+- **Registro de asistencia:** las maestras continuarán registrando la asistencia de las clases que sí se realicen.
+- **Gestión de usuarios:** el Administrador conservará las funciones existentes para administrar clientes y maestras.
+
+El cambio se concentra en las cancelaciones realizadas por el estudio y en sus consecuencias sobre las reservaciones, los pagos y la fidelidad.
+
+## Riesgos
+
+| Riesgo                                          | Probabilidad estimada | Consecuencia                                                                          |
+| ----------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------- |
+| Que se descuenten estrellas por error           | Media                 | Los clientes podrían recibir penalizaciones injustas.                                 |
+| Que no se recuperen correctamente los créditos  | Media                 | Los clientes podrían perder el valor de una clase pagada.                             |
+| Que una devolución se procese dos veces         | Media                 | El estudio podría sufrir pérdidas económicas.                                         |
+| Que algún cliente no reciba la notificación     | Media                 | El cliente podría acudir a una clase cancelada.                                       |
+| Que algunas reservaciones permanezcan activas   | Media                 | Se producirían inconsistencias entre el estado de la clase y sus reservaciones.       |
+| Que el cambio afecte las cancelaciones normales | Baja                  | Podrían aplicarse reglas incorrectas a las cancelaciones realizadas por los clientes. |
+
+**Riesgo de no realizar el cambio:**
+
+Si VYTTA no contempla las cancelaciones realizadas por el estudio, podrían presentarse problemas con los créditos, las estrellas de fidelidad y la comunicación con los clientes.
+
+Esto podría generar inconformidad y disminuir la confianza en la plataforma.
+
+Para reducir los riesgos se deberán realizar pruebas con varias reservaciones confirmadas, verificar los créditos y las estrellas antes y después de la cancelación, y comprobar que cada cliente reciba su aviso.
+
+Las probabilidades indicadas son estimaciones iniciales, no resultados de pruebas realizadas.
+
+## Alternativas consideradas
+
+### Opción A. Gestionar automáticamente las cancelaciones dentro de VYTTA
+
+Consiste en permitir que el Administrador cancele una clase y que el sistema realice las acciones correspondientes: actualizar las reservaciones, generar notificaciones, proteger las estrellas de fidelidad y gestionar la recuperación de créditos o devoluciones.
+
+**Ventajas:**
+
+- Reduce las tareas manuales del Administrador.
+- Evita penalizaciones injustas.
+- Mantiene organizada la información de las cancelaciones.
+- Permite que los clientes consulten los avisos directamente en VYTTA.
+
+**Desventajas:**
+
+- Requiere modificar varias funciones del sistema.
+- Necesita pruebas adicionales para evitar errores en pagos y fidelidad.
+- Puede requerir ajustes en la base de datos y en la comunicación entre componentes.
+
+### Opción B. Gestionar las cancelaciones manualmente
+
+Consiste en permitir que el Administrador marque una clase como cancelada, pero que las devoluciones, la recuperación de créditos y los avisos a los clientes se realicen manualmente.
+
+**Ventajas:**
+
+- Requiere menos modificaciones iniciales.
+- Puede implementarse en menos tiempo.
+- Permite atender temporalmente las cancelaciones.
+
+**Desventajas:**
+
+- Aumenta el trabajo del Administrador.
+- Existe mayor riesgo de olvidar notificaciones o devoluciones.
+- No resuelve completamente el problema de organización que busca solucionar VYTTA.
+- Mantiene la dependencia de procesos manuales.
+
+**Alternativa recomendada: Opción A.**
+
+Considero que la primera opción es la más adecuada porque responde mejor al objetivo de VYTTA: automatizar la administración de clases y ofrecer una experiencia más confiable para los clientes.
+
+Aunque requiere mayor esfuerzo, permite resolver el problema de manera más completa.
+
+## Estimación de esfuerzo
+
+La siguiente estimación considera el diseño, la implementación y las pruebas de la alternativa A.
+
+| Concepto                          | Esfuerzo     |
+| --------------------------------- | ------------ |
+| Cambios de diseño y documentación | 4 horas      |
+| Implementación                    | 8 horas      |
+| Pruebas                           | 4 horas      |
+| **Total**                         | **16 horas** |
+
+**De dónde sale este número**
+
+La estimación se realizó dividiendo el trabajo en tres actividades principales.
+
+**1. Cambios de diseño y documentación: 4 horas.**
+
+Se considera aproximadamente una hora para actualizar los requisitos y casos de uso, dos horas para revisar los diagramas UML y una hora para comprobar las dependencias arquitectónicas y documentar los cambios.
+
+**2. Implementación: 8 horas.**
+
+Se estiman dos horas para incorporar la cancelación de clases por parte del Administrador, dos horas para actualizar las reservaciones afectadas, dos horas para gestionar la protección de fidelidad y la recuperación de créditos o pagos, y dos horas para incorporar las notificaciones dentro de VYTTA.
+
+**3. Pruebas: 4 horas.**
+
+Se consideran dos horas para comprobar el funcionamiento de las cancelaciones y los beneficios de los clientes, una hora para verificar los avisos y una hora para revisar que las cancelaciones normales continúen funcionando correctamente.
+
+**Supuestos de la estimación:**
+
+- Se reutilizarán las funciones existentes de reservaciones, pagos y fidelidad.
+- Los avisos se mostrarán dentro de VYTTA, sin integrar WhatsApp, correo electrónico ni mensajes SMS.
+- No será necesario desarrollar un sistema de pagos desde cero.
+- La arquitectura actual permitirá incorporar el cambio sin una reorganización completa.
+- La estimación supone que existe una base funcional sobre la cual trabajar.
+
+No se incluyen retrasos de servicios externos, cambios importantes en la arquitectura ni tiempos de aprobación de devoluciones por parte del proveedor de pagos.
+
+Por estas razones, las 16 horas representan una estimación inicial de trabajo, no un tiempo garantizado. Si las funciones actuales todavía no están implementadas, el esfuerzo real podría ser mayor.
+
+## Recomendación
+
+**Recomendación: Aceptar la solicitud SC-001.**
+
+Considero que el cambio debe aceptarse porque resuelve una situación importante que no está contemplada completamente en las reglas actuales de VYTTA.
+
+La plataforma busca facilitar las reservaciones y mejorar la administración de las clases, por lo que también debe proteger a los clientes cuando una cancelación es responsabilidad del estudio.
+
+Además, el cambio permite evitar penalizaciones injustas, mejorar la comunicación y mantener un mejor control de los pagos y las reservaciones.
+
+Aunque su implementación requiere modificar varios elementos del sistema, el beneficio para los clientes justifica el esfuerzo estimado.
+
+Se recomienda incorporar esta funcionalidad antes de poner VYTTA en funcionamiento, siempre que las pruebas confirmen que no afecta las reglas de cancelación existentes.
+
