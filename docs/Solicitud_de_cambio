@@ -1,0 +1,161 @@
+
+# Solicitud de cambio SC-001 · VYTTA
+
+**Sistema:** VYTTA — Sistema web de reservación y gestión de clases  
+**Documento:** Solicitud de cambio  
+**Solicitante:** Jesús Cendejas  
+**Matrícula:** 00544774  
+**Rol:** Dupla de revisión (cliente)  
+**Fecha:** 12 de noviembre de 2026  
+**Estado:** Propuesta  
+
+---
+
+## Objetivo de la solicitud
+
+El objetivo de esta solicitud es mejorar la manera en la que VYTTA maneja las cancelaciones de clases realizadas por el estudio.
+
+Se busca que los clientes reciban un aviso dentro de la plataforma cuando una clase sea cancelada y que esta situación no afecte sus estrellas de fidelidad ni los créditos que hayan pagado.
+
+Con este cambio se pretende que el sistema sea más justo, organizado y confiable para los clientes.
+
+---
+
+# 1. ¿QUIÉN SOLICITA EL CAMBIO?
+
+Esta solicitud es realizada por Jesús Cendejas, integrante de la dupla de revisión de VYTTA, desde el punto de vista de un cliente que utiliza la plataforma para reservar clases de Barre.
+
+La propuesta busca mejorar la experiencia de los usuarios cuando el estudio necesita cancelar una clase que ya tenía reservaciones confirmadas.
+
+---
+
+# 2. ¿QUÉ CAMBIO SE SOLICITA?
+
+Se propone agregar una regla para que, cuando el estudio cancele una clase, los clientes que tenían una reservación reciban una notificación directamente en VYTTA.
+
+Además, la cancelación no deberá afectar sus beneficios.
+
+Por lo tanto, se solicita que:
+
+1. Los clientes reciban un aviso cuando su clase sea cancelada.
+2. Las reservaciones aparezcan como canceladas por el estudio.
+3. Ningún cliente pierda estrellas de fidelidad.
+4. El crédito de la clase vuelva a estar disponible o se realice la devolución correspondiente.
+
+De esta manera, los clientes no recibirán penalizaciones por situaciones que no dependen de ellos.
+
+---
+
+# 3. ¿POR QUÉ ES NECESARIO ESTE CAMBIO?
+
+Actualmente, VYTTA cuenta con una regla de cancelación que establece que los clientes deben cancelar sus clases con un mínimo de 3 horas de anticipación.
+
+Si cancelan fuera de ese tiempo, pierden una estrella de fidelidad y el crédito de la clase se considera utilizado.
+
+Sin embargo, el requisito RF-007 no establece qué debe suceder cuando es el propio estudio quien cancela una clase.
+
+Por ejemplo, si una maestra se enferma y no puede impartir su clase, los clientes no deberían perder dinero ni estrellas por una situación que no provocaron.
+
+Durante la entrevista también se consideraron estas situaciones en la sección 4, preguntas 5 y 6, pero todavía no se estableció una regla específica para resolverlas.
+
+Por esta razón, es necesario completar las reglas de cancelación para proteger a los clientes.
+
+---
+
+# 4. ¿QUÉ PASARÍA SI NO SE REALIZA EL CAMBIO?
+
+Si no se implementa este cambio, podrían presentarse diferentes problemas dentro de VYTTA.
+
+Por ejemplo:
+
+1. Los clientes podrían perder injustamente el crédito de una clase.
+2. El sistema podría descontar estrellas aunque el cliente no haya faltado.
+3. Las cancelaciones tendrían que seguir comunicándose por WhatsApp.
+4. Las reservaciones podrían quedar sin un estado definido.
+5. Los clientes podrían perder confianza en el estudio y en la plataforma.
+
+Esto afectaría el objetivo principal de VYTTA, que es facilitar las reservaciones y mejorar la organización del estudio.
+
+---
+
+# 5. TIPO DE MANTENIMIENTO
+
+- [x] **Correctivo:** corregir una regla incompleta del sistema.
+- [ ] **Adaptativo:** ajustar el sistema a cambios externos.
+- [ ] **Perfectivo:** mejorar una función que ya existe.
+- [ ] **Preventivo:** evitar posibles problemas futuros.
+
+## Justificación
+
+Se considera mantenimiento correctivo porque actualmente la regla de cancelación solamente contempla las acciones del cliente y no establece qué sucede cuando el estudio cancela una clase.
+
+El cambio busca corregir esta situación para evitar penalizaciones injustas y garantizar un funcionamiento adecuado del sistema.
+
+---
+
+# 6. CRITERIOS DE ACEPTACIÓN
+
+Para comprobar que el cambio funciona correctamente, se realizará una prueba con una clase que tenga **3 reservaciones confirmadas**.
+
+El administrador cancelará la clase y se revisará que se cumplan las siguientes condiciones.
+
+| N.º | Criterio de aceptación | Resultado |
+|---|---|---|
+| 1 | Las 3 reservaciones dejan de estar activas y aparecen como canceladas por el estudio. | Sí / No |
+| 2 | Ninguno de los 3 clientes pierde estrellas de fidelidad. | Sí / No |
+| 3 | Los 3 clientes recuperan su crédito o reciben la devolución correspondiente. | Sí / No |
+| 4 | Los 3 clientes pueden visualizar el aviso de cancelación al entrar a VYTTA. | Sí / No |
+
+## Condición para aprobar el cambio
+
+El cambio se considerará terminado únicamente cuando se cumplan los cuatro criterios de aceptación.
+
+Si alguno de los criterios no se cumple, el cambio todavía necesitará correcciones.
+
+---
+
+# 7. PRIORIDAD DEL CAMBIO
+
+**Prioridad sugerida: Alta**
+
+Considero que este cambio tiene una prioridad alta porque involucra tanto el dinero de los clientes como su programa de fidelidad.
+
+Si el estudio cancela una clase, el cliente no debería recibir ninguna penalización por algo que está fuera de su control.
+
+Además, situaciones como la enfermedad de una maestra o una cancelación inesperada pueden presentarse en cualquier momento.
+
+Por eso, considero importante atender esta situación antes de poner VYTTA en funcionamiento.
+
+La prioridad definitiva deberá establecerse después de realizar el análisis de impacto.
+
+---
+
+# 8. ESTADO DE LA SOLICITUD
+
+**Estado actual:** Propuesta  
+**Fecha de registro:** 12 de noviembre de 2026
+
+Esta solicitud queda pendiente de revisión y análisis de impacto.
+
+Después de analizarla, podrá cambiar a uno de los siguientes estados:
+
+1. **Aceptada:** se aprueba realizar el cambio.
+2. **Rechazada:** se decide no implementar el cambio.
+3. **Aplazada:** el cambio se considera necesario, pero se realizará posteriormente.
+
+Cualquier cambio de estado deberá incluir una justificación y conservarse en el historial del documento.
+
+---
+
+# CONCLUSIÓN
+
+Esta solicitud busca mejorar la manera en la que VYTTA maneja las cancelaciones realizadas por el estudio.
+
+Considero importante que los clientes puedan reservar sus clases con la tranquilidad de que, si el estudio necesita cancelar, recibirán un aviso y no perderán sus estrellas ni el crédito de la clase.
+
+De esta manera, VYTTA podrá ofrecer un servicio más justo, organizado y confiable, manteniendo una buena relación entre el estudio y sus clientes.
+
+---
+
+
+*Documento elaborado por la dupla de revisión de VYTTA.*
